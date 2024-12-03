@@ -1,0 +1,45 @@
+<!DOCTYPE html> 
+<html lang="ru"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Список авторов</title> 
+    <link rel="stylesheet" href="styleAuth.css"> 
+</head> 
+<body> 
+    <header> 
+        <div class="log"> 
+            <a href="#">Блог №415</a> 
+            <a href="file:///C:/post/post.html" class="return">Главная</a> 
+            <a href="#" class="return">Группы</a> 
+        </div> 
+        <span type="submit"  id="in">Вход</span> 
+        <div id="userMenu" style="display: none"> 
+          <button id="profileButton">Профиль</button> 
+          <button id="logoutButton">Выход</button> 
+        </div> 
+    </header> 
+    <main id="author-list"> 
+        <template id="author-template"> 
+            <div class="author-block"> 
+                <img src="" alt=""> 
+                <div class="author-info"> 
+                    <div class="name-created">  
+                        <h2></h2> 
+                        <p>Создан: </p> 
+                    </div> 
+                    <p class="birthdate">Дата рождения: </p> 
+                </div> 
+                <div class="author-stats"> 
+                    <button>Постов: </button> 
+                    <button>Лайков: </button> 
+                </div> 
+            </div> 
+        </template> 
+    </main> 
+    <footer> 
+        <div class="foottext">© 2024 - Блог №001</div> 
+    </footer> 
+    <script src="script.js"></script> 
+</body> 
+</html>

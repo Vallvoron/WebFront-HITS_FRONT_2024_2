@@ -1,0 +1,40 @@
+<!DOCTYPE html> 
+<html lang="ru"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Вход</title> 
+    <link rel="stylesheet" type="text/css" href="styleLogin.css" />
+</head> 
+<body> 
+    <header> 
+        <div class="log">
+            <a href="#">Блог №415</a>
+            <a href="#"class="return">Главная</a>
+        </div>
+        <span type="submit"  id="in">Вход</span>
+        <div id="userMenu" style="display: none">
+            <button id="profileButton">Профиль</button>
+            <button id="logoutButton">Выход</button>
+        </div>
+    </header> 
+    <main> 
+        <div class="login-form"> 
+            <h2>Вход</h2> 
+            <label for="email">Email</label> 
+            <input type="email" id="email" placeholder="name@example.com"> 
+            <label for="password">Пароль</label> 
+            <input type="password" id="password"> 
+            <button type="submit" onclick=a()>Войти</button> 
+            <button type="button" onclick=b()>Зарегистрироваться</button> 
+        </div> 
+    </main> 
+ 
+    <footer> 
+        <div class="foottext">
+            © 2022 - Блог №415 
+        </div> 
+    </footer> 
+    <script type="text/javascript" src="script.js"></script>
+</body> 
+</html>

@@ -1,0 +1,153 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: white;
+}
+
+
+header { 
+    background-color: #fff; 
+    padding: 13px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    font-size: 15px; 
+    border-bottom: 1px solid #ccc; 
+    cursor: pointer; 
+} 
+
+.return { 
+    margin-left:15px;
+    font-size: 13px;
+}
+.log { 
+    justify-content: start; 
+    margin-left: 1.5%;
+} 
+#in { 
+    font-size: 13px;
+    margin-right:1.5%;
+} 
+
+header a { 
+    text-decoration: none; 
+    color: #333; 
+} 
+
+#userMenu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 2%;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    min-width: 80px;
+}
+
+#userMenu button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 0;
+    text-align: left; 
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+main { 
+    flex-grow: 1; 
+    display: flex; 
+    align-items: center; 
+    flex-direction: column;
+    padding: 20px;
+} 
+  
+
+.author-block {
+    background-color: #fff;
+    width: 80%;
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+
+}
+
+.author-block img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.name-created {
+    display: flex;
+    justify-content: auto;
+    align-items: center;
+    width: 100%;
+}
+
+.name-created h2 {
+    margin: 0 1% 0 0;
+    font-size: 16px;
+}
+
+.name-created p {
+    margin: 0;
+    font-size: 14px;
+    color: #646464;
+    font-style: italic;
+}
+
+.author-info p.birthdate {
+    margin-top: 5px;
+    margin-bottom: 0;
+    color: #555;
+    font-style: normal;
+}
+
+.author-stats {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-right: 5px;
+    margin-top: 5px;
+    min-width: 200px;
+}
+
+.author-stats button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+footer { 
+    background-color: #ececec; 
+    padding: 10px; 
+    text-align: start; 
+    font-size: 13px; 
+    color: #666; 
+    border-top: 1px solid #ccc; 
+  } 
+  .foottext {   
+    margin-left:16%; 
+    margin-top: 10px;
+    margin-bottom: 10px; 
+  } 

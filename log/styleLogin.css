@@ -1,0 +1,134 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+
+header {
+    position: relative;
+    background-color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.return {
+    margin-left: 15px;
+}
+.log {
+    justify-content: start;
+    margin-left: 1%;
+}
+
+#in{
+    position: relative;
+    padding: 8px 8px;
+    border: 0;
+    background-color: #ffffff;
+    cursor: pointer;
+    margin-right:1%;
+}
+
+
+header a {
+    text-decoration: none;
+    color: #333;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    min-width: 300px;
+}
+
+.login-form h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.login-form input[type="email"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.login-form button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.login-form button[type="button"] {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+
+footer {
+    background-color: #e6e6e6;
+    padding: 10px;
+    text-align: start;
+    font-size: 14px;
+    color: #666;
+}
+
+.foottext {
+    margin-left: 5%;
+}
+
+
+
+#userMenu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 2%;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    min-width: 80px;
+}
+
+#userMenu button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 0;
+    text-align: left; /*Изменено на left */
+    border: none;
+    background: none;
+    cursor: pointer;
+}
