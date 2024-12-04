@@ -1,0 +1,156 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: white;
+}
+
+
+header { 
+  background-color: #fff; 
+  padding: 13px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  font-size: 15px; 
+  border-bottom: 1px solid #ccc; 
+  cursor: pointer; 
+} 
+
+.return { 
+  margin-left:15px;
+  font-size: 13px;
+} 
+.log { 
+  justify-content: start; 
+  margin-left: 1.5%;
+} 
+#in { 
+  font-size: 13px;
+  margin-right:1.5%;
+} 
+
+
+header a { 
+  text-decoration: none; 
+  color: #333; 
+} 
+
+#userMenu {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 2%;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  min-width: 80px;
+}
+
+#userMenu button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 0;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+main { 
+  flex-grow: 1; 
+  display: flex; 
+  align-items:center; 
+  flex-direction: column;
+} 
+
+.create-container{
+  width: 75%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+.lab{
+  margin-bottom: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.create-row{
+  display: flex; 
+  flex-direction: row;
+  margin-bottom: 5px;
+}
+
+
+.create-column{
+  display: flex; 
+  align-items: flex-start; 
+  flex-direction: column;
+  padding: 10px;
+}
+
+#postname{
+  width: 70%;
+}
+
+#readTM{
+  width: 30%;
+}
+
+#postgroup,
+#posttags{
+  width: 50%;
+}
+label{
+  margin-bottom: 5px;
+}
+
+input, select, textarea {
+  width: 100%;
+  min-height: 25px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+textarea {
+  height: 150px;
+}
+
+.createbtn{
+  margin-right: 10px;
+  align-items: flex-end;
+  flex-direction: column-reverse;
+  display: flex;
+}
+
+#crtPost {
+  background-color: #106ef5;
+  color:white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+footer { 
+  background-color: #ececec; 
+  padding: 10px; 
+  text-align: start; 
+  font-size: 13px; 
+  color: #666; 
+  border-top: 1px solid #ccc; 
+} 
+.foottext {   
+  margin-left:16%; 
+  margin-top: 10px;
+  margin-bottom: 10px; 
+} 

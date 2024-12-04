@@ -5,7 +5,7 @@ const authorFilter = document.getElementById('author-filter');
 const sortingSelect = document.getElementById('sorting-select'); 
 const applyFilterButton = document.getElementById('filter-button'); 
 
-const tagListInput = document.getElementById('tag-search');
+const topicSelector = document.getElementById('topicSelector');
 const authorInput = document.getElementById('author-search');
 const authorMinInput = document.getElementById('authorMin');
 const authorMaxInput = document.getElementById('authorMax');
@@ -14,11 +14,98 @@ const onlyMyCommunitiesInput = document.getElementById('my-groups-only');
 const pageInput = document.getElementById('page');
 const sizeInput = document.getElementById('size');
 
- 
+const loginButton = document.getElementById('in');
+const profileButton = document.getElementById('profileButton');
+const logoutButton = document.getElementById('logoutButton');
+const userMenu = document.getElementById('userMenu');
+let userMenuListenerAttached = false;
+
 let currentPage = 1; 
 let pageSize = 5; 
 let currentFilters = {}; 
 let currentSorting = ''; 
+
+let selected = [];
+
+function activate(email){
+    if (!userMenuListenerAttached) {
+      loginButton.addEventListener('click', () => {
+      userMenu.style.display = userMenu.style.display === 'block' ? 'none' : 'block';
+      });
+      loginButton.textContent = email + ' ▾';
+      profileButton.style.display = 'inline-block';
+      logoutButton.style.display = 'inline-block';
+  
+      profileButton.addEventListener('click', () => {
+        window.location.href = 'file:///C:/lab2/prof/profile.html'
+          alert("Переход на страницу профиля");
+      });
+  
+      logoutButton.addEventListener('click', () => {
+        localStorage.removeItem('token');
+          window.location.reload();
+          alert("Вы вышли из аккаунта");
+      });
+      userMenuListenerAttached = true;
+    }
+}
+
+function increaseSelectedTagIds(option) {
+  selected.push(option.value);
+  option.removeEventListener('click',null); 
+  option.addEventListener("click", ()=>{decreaseSelectedTagIds(option)});
+  console.log(selected);
+}
+
+function decreaseSelectedTagIds(option) {
+  selected = selected.filter(value => value !== option.value);
+  option.removeEventListener('click',null); 
+  option.addEventListener("click", ()=>{increaseSelectedTagIds(option)});
+  console.log(selected);
+}
+
+function getTags()
+{
+  fetch('https://blog.kreosoft.space/api/tag', { 
+    method: 'GET', 
+    headers: { 
+      'Content-Type': 'application/json' 
+    }, 
+  }) 
+  .then(response => { 
+    if (!response.ok) { 
+       
+      return response.text().then(text => { throw new Error(text) }); 
+    } 
+    return response.json();
+  }) 
+  .then(data => { 
+    topicSelector.innerHTML = ''; // Clear existing options
+    data.forEach(tag => {
+      const option = document.createElement('option');
+      option.value = tag.id; // Use the ID as the value
+      option.text = tag.name; // Use the name as the displayed text
+      option.addEventListener("click", ()=>{increaseSelectedTagIds(option)});
+      topicSelector.appendChild(option);
+    });
+  });
+}
+
+window.addEventListener('load', () => {
+    const authToken = localStorage.getItem('token');
+    if (authToken) {
+      console.log('Токен получен из localStorage:', localStorage.getItem('token'));
+      email=localStorage.getItem('email')
+      document.getElementById('in').textContent=email;
+      activate(email);
+    } else {
+      console.log('Токен не найден в localStorage.');
+      loginButton.addEventListener('click', () => {
+        window.location.href = 'file:///C:/lab2/log/login.html';
+      });
+    }
+    getTags();
+});
 
 function formatDate(dateString) {
     // Convert the date string to a Date object
@@ -37,8 +124,8 @@ applyFilterButton.addEventListener('click', () => {
     const postContainer = document.getElementById('post-container');
     postContainer.innerHTML = '';
     const params = {};
-    if (tagListInput.value.trim() !== '') {
-        params.tags = tagListInput.value.split(',').map(s => s.trim());
+    if (topicSelector.value.trim() !== '') {
+        params.tags = selected.map(s => s.trim());
     }
     if (authorInput.value.trim() !== '') {
         params.author = authorInput.value;
@@ -80,7 +167,7 @@ applyFilterButton.addEventListener('click', () => {
         alert("Размер страницы и номер страницы должны быть положительными числами")
         return;
     }
-
+    console.log(url);
     fetch(url, { 
         method: 'GET', 
         headers: { 
@@ -99,7 +186,9 @@ applyFilterButton.addEventListener('click', () => {
         posts.forEach(post => {
             const postBlock = postTemplate.content.cloneNode(true);
 
-            postBlock.querySelector('.author-info').textContent = textContent = `${post.author} - ${formatDate(post.createTime)} в сообществе "${post.communityName}"`;
+            if(post.communityName==null){
+              postBlock.querySelector('.author-info').textContent = textContent = `${post.author} - ${formatDate(post.createTime)}`;
+            } else{ postBlock.querySelector('.author-info').textContent = textContent = `${post.author} - ${formatDate(post.createTime)} в сообществе "${post.communityName}"`}
             postBlock.querySelector('.title').textContent =  post.title;
             postBlock.querySelector('.description').textContent =  post.description;
             postBlock.querySelector('.timeRied').textContent = `Время чтения: ${post.readingTime} мин`;
@@ -119,3 +208,8 @@ applyFilterButton.addEventListener('click', () => {
         
     });
 })
+
+function newpost()
+{
+    window.location.href = "C:/lab2/newPost/creater.html"
+}

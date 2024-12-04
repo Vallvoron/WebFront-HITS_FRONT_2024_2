@@ -12,17 +12,17 @@
             <a href="#">Блог №415</a>
             <a href="file:///C:/lab2/post/post.html" class="return">Главная</a>
             <a href="file:///C:/lab2/authors/authors.html" class="return">Авторы</a>
-            <a href="#" class="return">Группы</a>
+            <a href="file:///C:/lab2/groups/groups.html" class="return">Группы</a>
         </div>
         <span type="submit"  id="in">Вход</span>
         <div id="userMenu" style="display: none">
           <button id="profileButton">Профиль</button>
           <button id="logoutButton">Выход</button>
-        </div>
+      </div>
     </header>
     <main>
       <div class="makePost">
-        <button id="makePost">Написать пост</button>
+        <button id="makePost" onclick=newpost()>Написать пост</button>
       </div>
       <div class="filter-container">
         <h2>Фильтры</h2>
@@ -35,7 +35,9 @@
             </div>
             <div class="filter-column">
               <label for="tag-search">Поиск по тэгам:</label>
-              <input type="text" id="tag-search">
+              <select multiple id="topicSelector" size="3"> 
+              </select> 
+            </div>
             </div>
           </div>
           <div class="filter-row">
@@ -55,7 +57,7 @@
             <input type="checkbox" id="my-groups-only">
             <label for="my-groups-only">Только мои группы</label>
           </div>
-            <button id="filter-button">Применить</button>
+            <button class="filter-button", id="filter-button">Применить</button>
             
           </div>
         </div>

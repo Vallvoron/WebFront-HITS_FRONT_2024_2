@@ -127,7 +127,7 @@ footer {
     width: 100%;
     box-sizing: border-box;
     padding: 8px 0;
-    text-align: left; /*Изменено на left */
+    text-align: left;
     border: none;
     background: none;
     cursor: pointer;

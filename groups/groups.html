@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styleGroups.css">
+    <title>Группы</title>
+</head>
+<body>
+    <header>
+        <div class="log">
+            <a >Блог №415</a>
+            <a href="file:///E:/TSU/Front/lab2/post/post.html" class="return">Главная</a>
+            <a href="file:///E:/TSU/Front/lab2/auth/authors.html" class="return">Авторы</a>
+            <a href="file:///E:/TSU/Front/lab2/groups/groups.html" class="return">Группы</a>
+        </div>
+        <span type="submit"  id="in">Вход</span>
+        <div id="userMenu" style="display: none">
+          <button id="profileButton">Профиль</button>
+          <button id="logoutButton">Выход</button>
+        </div>
+    </header>
+    <main>
+        <p id="errorMessage"></p>
+        
+        <div id="groups-container">
+            <!-- динамически появляются группы -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="foottext">© 2024 - Блог №001</div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

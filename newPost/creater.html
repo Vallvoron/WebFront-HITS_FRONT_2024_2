@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="stylecreater.css">
+  <title>Create New Post</title>
+</head>
+<body>
+  <header>
+    <div class="log">
+        <a >Блог №415</a>
+        <a href="file:///C:/lab2/post/post.html" class="return">Главная</a>
+        <a href="file:///C:/lab2/auth/authors.html" class="return">Авторы</a>
+        <a href="file:///C:/lab2/groups/groups.html" class="return">Группы</a>
+    </div>
+    <span type="submit"  id="in">Вход</span>
+    <div id="userMenu" style="display: none">
+      <button id="profileButton">Профиль</button>
+      <button id="logoutButton">Выход</button>
+  </div>
+  </header>
+  <main>
+    <div class="create-container">
+      <div class="lab">Написать новый пост</div>
+
+      <form id="postForm">
+        <div class="create-row">
+          <div class="create-column" id="postname">
+            <label for="title">Название:</label>
+            <input type="text" id="title" name="title">
+          </div>
+          <div class="create-column" id="readTM">
+            <label for="readingTime">Время чтения:</label>
+            <input type="number" id="readingTime" name="readingTime" value="0">
+          </div>
+        </div>
+        <div class="create-row">
+          <div class="create-column" id="postgroup">
+            <label for="group">Группа:</label>
+            <select id="group" name="group">
+              <option value="">Без группы</option>
+            </select>
+          </div>
+          <div class="create-column" id="posttags">            
+            <label for="tags">Тэги:</label>
+            <select id="topicSelector" size="3" multiple>
+            </select>
+          </div>
+        </div>
+        <div class="create-column" id="postimg">
+          <label for="image">Ссылка на картинку:</label>
+          <input type="text" id="image" name="image">
+        </div>
+        <div class="create-column" id="posttext">
+          <label for="text">Текст:</label>
+          <textarea id="text" name="text"></textarea>
+        </div>
+        <div class="create-column" id="posttext">
+          <label for="address">Адрес:</label>
+          <select id="address" name="addressId">
+            <option value="">Не выбран</option>
+          </select>
+        </div>
+      </form>
+      <div class="createbtn">
+        <button type="button" id="crtPost" onclick="createPost()">Создать пост</button>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="foottext">© 2024 - Блог №001</div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
