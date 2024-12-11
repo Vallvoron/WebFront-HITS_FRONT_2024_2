@@ -1,5 +1,6 @@
 const topicSelector = document.getElementById('topicSelector');
 const groupSelector = document.getElementById('group');
+const buttonsContainer = document.getElementById('buttonsContainer');
 let selected = [];
 
 function increaseSelectedTagIds(option) {
@@ -15,6 +16,43 @@ function decreaseSelectedTagIds(option) {
   option.addEventListener("click", ()=>{increaseSelectedTagIds(option)});
   console.log(selected);
 }
+
+result="";
+async function fetchAndDisplayButtons(parentId,lastObjectGuid) {
+  buttonsContainer.innerHTML = '';
+  const url = `https://blog.kreosoft.space/api/address/search${parentId ? '?parentObjectId=' + parentId : ''}`;
+  console.log(url);
+  try {
+      const response = await fetch(url);
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+
+      if (Array.isArray(data)) {
+          if (data.length > 0) {
+              data.forEach(item => {
+                  const button = document.createElement('button');
+                  button.textContent = item.text;
+                  button.onclick = () => fetchAndDisplayButtons(item.objectId, item.objectGuid);
+                  buttonsContainer.appendChild(button);
+              });
+          } else {
+              // Обработка случая, когда нет дочерних элементов
+              console.log("Last objectId:", lastObjectGuid);
+              buttonsContainer.innerHTML = `<p>No more children. Last objectId: ${lastObjectGuid}</p>`;
+          }
+      } else {
+          // Обработка случая, если ответ не является массивом
+          console.error("Unexpected response format:", data);
+          buttonsContainer.innerHTML = "<p>Error: Unexpected response format</p>";
+      }
+  } catch (error) {
+      console.error('Error fetching data:', error);
+      buttonsContainer.innerHTML = `<p>Error: ${error.message}</p>`;
+  }
+}
+
 
 function getGroups()
 {
@@ -135,6 +173,8 @@ window.addEventListener('load', () => {
     }
     getTags();
     getGroups();
+    fetchAndDisplayButtons(null);
+    console.log(result);
 });
 
 
