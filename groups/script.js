@@ -76,7 +76,7 @@ async function loadGroups() {
             titleButton.className = "groupTitel";
             titleButton.textContent = group.name;
             titleButton.onclick = () => {
-                localStorage.setItem("selectedGroupId", group.id);
+                localStorage.setItem("GroupId", group.id);
                 window.location.href = "file:///C:/lab2/group/group.html";
             };
             groupElement.appendChild(titleButton);

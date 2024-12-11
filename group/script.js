@@ -1,16 +1,11 @@
 const postContainer = document.getElementById('post-container'); 
 const postTemplate = document.getElementById('post-template');
 const paginationContainer = document.getElementById('pagination'); 
-const authorFilter = document.getElementById('author-filter'); 
 const sortingSelect = document.getElementById('sorting-select'); 
 const applyFilterButton = document.getElementById('filter-button'); 
 
 const topicSelector = document.getElementById('topicSelector');
-const authorInput = document.getElementById('author-search');
-const authorMinInput = document.getElementById('authorMin');
-const authorMaxInput = document.getElementById('authorMax');
 const sortingInput = document.getElementById('sort-by');
-const onlyMyCommunitiesInput = document.getElementById('my-groups-only');
 const pageInput = document.getElementById('page');
 const sizeInput = document.getElementById('size');
 
@@ -18,7 +13,12 @@ const loginButton = document.getElementById('in');
 const profileButton = document.getElementById('profileButton');
 const logoutButton = document.getElementById('logoutButton');
 const userMenu = document.getElementById('userMenu');
-let userMenuListenerAttached = false;
+
+let groupName = document.getElementById('group-name');
+const makePost = document.getElementById('makePost');
+let subscribe = document.getElementById('subscribe');
+let groupMemberCount = document.getElementById('group-member-count');
+let groupType = document.getElementById('group-type');
 
 let currentPage = 1; 
 let pageSize = 5; 
@@ -26,6 +26,7 @@ let currentFilters = {};
 let currentSorting = ''; 
 
 let selected = [];
+let userMenuListenerAttached=false;
 
 function activate(email){
     if (!userMenuListenerAttached) {
@@ -50,6 +51,30 @@ function activate(email){
     }
 }
 
+function getGroupInf()
+{
+    const group=localStorage.getItem("GroupId");
+    fetch(`https://blog.kreosoft.space/api/community/${group}`, { 
+        method: 'GET', 
+        headers: { 
+          'Content-Type': 'application/json' 
+        }, 
+    })
+    .then(response => { 
+        if (!response.ok) { 
+            return response.text().then(text => { throw new Error(text) }); 
+        } 
+        return response.json();
+    }) 
+    .then(data => {
+        groupName.textContent = `Группа "`+data.name+`"`;
+        groupMemberCount.textContent = data.subscribersCount+" подписчиков";
+        if(data.isClosed=true){
+            groupType.textContent = "Тип сообщества: открытое";
+        }
+        else groupType.textContent = "Тип сообщества: закрытое";
+    });
+}
 function increaseSelectedTagIds(option) {
   selected.push(option.value);
   option.removeEventListener('click',null); 
@@ -80,11 +105,11 @@ function getTags()
     return response.json();
   }) 
   .then(data => { 
-    topicSelector.innerHTML = ''; // Clear existing options
+    topicSelector.innerHTML = '';
     data.forEach(tag => {
       const option = document.createElement('option');
-      option.value = tag.id; // Use the ID as the value
-      option.text = tag.name; // Use the name as the displayed text
+      option.value = tag.id;
+      option.text = tag.name;
       option.addEventListener("click", ()=>{increaseSelectedTagIds(option)});
       topicSelector.appendChild(option);
     });
@@ -105,6 +130,7 @@ window.addEventListener('load', () => {
       });
     }
     getTags();
+    getGroupInf();
 });
 
 function formatDate(dateString) {
@@ -121,23 +147,13 @@ function formatDate(dateString) {
 }
 
 applyFilterButton.addEventListener('click', () => {
+    const group=localStorage.getItem("GroupId");
     const postContainer = document.getElementById('post-container');
     postContainer.innerHTML = '';
-    params={};
-    if (authorInput.value.trim() !== '') {
-        params.author = authorInput.value;
-    }
-    if (authorMinInput.value.trim() !== '') {
-        params.min = parseInt(authorMinInput.value, 10);
-    }
-    if (authorMaxInput.value.trim() !== '') {
-        params.max = parseInt(authorMaxInput.value, 10);
-    }
+    const params = {};
     if (sortingInput.value.trim() !== '') {
         params.sorting = sortingInput.value;
     }
-    params.onlyMyCommunities = onlyMyCommunitiesInput.checked;
-
     if (false)//pageInput.value.trim() !== '') {
      {   params.page = parseInt(pageInput.value, 10) || 1;
     } else {params.page = 1;}
@@ -145,7 +161,8 @@ applyFilterButton.addEventListener('click', () => {
         {params.size = parseInt(sizeInput.value, 10) || 5;
     } else {params.size = 5;}
 
-    url = new URL('https://blog.kreosoft.space/api/post');
+    url = new URL(`https://blog.kreosoft.space/api/community/${group}/post`);
+
     for (const key in params) {
         if (params.hasOwnProperty(key)) {
           let value = params[key];
@@ -160,13 +177,11 @@ applyFilterButton.addEventListener('click', () => {
     }
 
     if (topicSelector.value.trim() !== '') {
-      selected.forEach(tag => {
-        url+="&tags="+tag;
-      });
-      params.tags = selected.map(s => s.trim());
+        selected.forEach(tag => {
+          url+="&tags="+tag;
+        });
+        params.tags = selected.map(s => s.trim());
     }
-
-    console.log(url);
 
     if (params.size <=0 || params.page <= 0) {
         alert("Размер страницы и номер страницы должны быть положительными числами")
@@ -193,7 +208,7 @@ applyFilterButton.addEventListener('click', () => {
 
             if(post.communityName==null){
               postBlock.querySelector('.author-info').textContent = textContent = `${post.author} - ${formatDate(post.createTime)}`;
-            } else{ postBlock.querySelector('.author-info').textContent = textContent = `${post.author} - ${formatDate(post.createTime)} в сообществе "${post.communityName}"`}
+            } else{ postBlock.querySelector('.author-info').textContent = textContent = `${post.author} - ${formatDate(post.createTime)}"`}
             postBlock.querySelector('.title').textContent =  post.title;
             postBlock.querySelector('.description').textContent =  post.description;
             postBlock.querySelector('.timeRied').textContent = `Время чтения: ${post.readingTime} мин`;
@@ -213,8 +228,3 @@ applyFilterButton.addEventListener('click', () => {
         
     });
 })
-
-function newpost()
-{
-    window.location.href = "C:/lab2/newPost/creater.html"
-}

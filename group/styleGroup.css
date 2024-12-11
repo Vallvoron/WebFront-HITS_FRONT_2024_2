@@ -1,0 +1,374 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: white;
+}
+
+
+header { 
+  background-color: #fff; 
+  padding: 13px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  font-size: 15px; 
+  border-bottom: 1px solid #ccc; 
+  cursor: pointer; 
+} 
+
+.return { 
+  margin-left:15px;
+  font-size: 13px;
+} 
+.log { 
+  justify-content: start; 
+  margin-left: 1.5%;
+} 
+#in { 
+  font-size: 13px;
+  margin-right:1.5%;
+} 
+
+
+header a { 
+  text-decoration: none; 
+  color: #333; 
+} 
+
+#userMenu {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 2%;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  min-width: 80px;
+}
+
+#userMenu button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 0;
+  text-align: left; 
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+main { 
+  flex-grow: 1; 
+  display: flex; 
+  align-items:start; 
+  flex-direction: column;
+} 
+
+#group-info-container {
+  margin: 20px auto;
+  border: 1px solid #ccc; 
+  background-color: white; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width:75%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.group-name{
+  font-size: 34px;
+  font: bold;
+}
+
+#makePost{
+  background-color: #106ef5;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  padding: 7px;
+  border-radius: 4px;
+  margin: 5px;
+}
+
+#subscribe{
+  background-color: #106ef5;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  padding: 7px;
+  border-radius: 4px;
+  margin: 5px;
+}
+
+.info-row img {
+  max-width: 25px;
+  margin: 0;
+}
+
+.group-member-count{
+  margin-left: 10px;
+  margin-right: auto;
+}
+
+.group-admin{
+  font-size: 20px;
+  font: bold;
+}
+
+.admin-block {
+  background-color: #fff;
+  width: 80%;
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+
+}
+
+.admin-block img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.admin-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.name-created {
+  display: flex;
+  justify-content: auto;
+  align-items: center;
+  width: 100%;
+}
+
+.name-created h2 {
+  margin: 0 1% 0 0;
+  font-size: 16px;
+}
+
+
+
+.filter-container {
+  margin: 0 auto;
+  margin-bottom: 20px;
+  border: 1px solid #ccc; 
+  background-color: white; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width:75%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+.filter-container h2 {
+  background-color: #f7f7f7;
+  margin: 0%;
+  padding: 10px 15px;
+  color: black;
+  font-weight: lighter;
+  font-size: 14px;
+}
+
+
+.filter-section {
+  display: flex; 
+  flex-direction: column;
+  background-color: white;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-evenly;
+}
+.filter-column {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  flex:auto; 
+}
+
+.filter-column label {
+  flex-shrink: 0.5;
+  margin-right: 10px;
+  min-width: 50px;
+  margin-bottom: 3px;
+}
+
+.filter-column input[type="text"],
+.filter-column select{
+  min-width: 50px;
+}
+
+
+.filter-button {
+  background-color: #106ef5;
+  border: none;
+  color: white;
+  padding: 7px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-right: 10px;
+  margin-left: auto;
+}
+
+
+#post-container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 75%;
+}
+
+
+.post-block {
+border: 1px solid #ccc;
+padding: 0;
+background-color: #fff;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-block .img img {
+  max-width: 70%;
+  max-height: 400px;
+  margin: 15px 15%;
+}
+ 
+.post-block .img{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.post-block .title {
+  margin: 0 15px;
+  padding-bottom: 15px;
+  font-size: 18px; 
+  font-weight: bold;
+  border-bottom: 1px solid #ccc; 
+}
+
+.post-block .author-info,
+.post-block .description,
+.post-block .tags,
+.post-block .timeRied{  
+  margin: 0 15px;
+  margin-bottom: 5px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.post-block .author-info{
+  margin-top: 10px;
+}
+
+.post-block .tags {
+  color: gray;
+}
+
+.post-block .comments{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.post-block .comments img {
+  max-width: 30px;
+  margin: 0;
+}
+.post-block .like .likescount,
+.post-block .comments .commentscount {
+  margin-right: 5px;
+}
+
+.post-block .like{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.post-block .like img {
+  max-width: 15px;
+  margin: 0;
+}
+.post-block .status {
+  padding: 10px 15px;
+  margin-top: 15px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  justify-content: space-between;
+  background-color: #f7f7f7;
+}
+
+.post-metadata {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
+}
+
+.post-metadata .author{
+  margin-right: 10px;
+}
+
+.post-metadata .community{
+margin-left: auto;
+}
+
+.post-metadata .likes{
+margin-left: 10px;
+}
+.post-metadata .likes i{
+color: red;
+}
+
+
+
+
+footer { 
+  background-color: #ececec; 
+  padding: 10px; 
+  text-align: start; 
+  font-size: 13px; 
+  color: #666; 
+  border-top: 1px solid #ccc; 
+} 
+.foottext {   
+  margin-left:16%; 
+  margin-top: 10px;
+  margin-bottom: 10px; 
+} 
