@@ -14,7 +14,7 @@ function activate(email){
     logoutButton.style.display = 'inline-block';
 
     profileButton.addEventListener('click', () => {
-      window.location.href = 'file:///E:/TSU/Front/lab2/prof/profile.html'
+      window.location.href = 'file:///C:/lab2/prof/profile.html'
         alert("Переход на страницу профиля");
     });
 
@@ -38,7 +38,7 @@ window.addEventListener('load', () => {
     } else {
       console.log('Токен не найден в localStorage.');
       loginButton.addEventListener('click', ()=>{
-        window.location.href = 'file:///E:/TSU/Front/lab2/log/login.html'
+        window.location.href = 'file:///C:/lab2/log/login.html'
       })
     }
 
@@ -77,7 +77,7 @@ async function loadGroups() {
             titleButton.textContent = group.name;
             titleButton.onclick = () => {
                 localStorage.setItem("selectedGroupId", group.id);
-                window.location.href = "file:///E:/TSU/Front/lab2/group/group.html";
+                window.location.href = "file:///C:/lab2/group/group.html";
             };
             groupElement.appendChild(titleButton);
 
@@ -142,7 +142,7 @@ async function loadGroups() {
 
 
 function redirectToProfile() {
-    window.location.href = "file:///E:/TSU/Front/lab2/prof/profile.html";
+    window.location.href = "file:///C:/lab2/prof/profile.html";
 } 
 
 function refreshPage() {
