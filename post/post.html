@@ -43,7 +43,12 @@
           <div class="filter-row">
             <div class="filter-column">
               <label for="sort-by">Сортировать:</label>
-              <select id="sort-by"> </select>
+              <select id="sort-by"> 
+                <option value="CreateDesc" selected>по дате создания (сначала новые)</option>
+                <option value="CreateAsc">по дате создания (сначала старые)</option>
+                <option value="LikeDesc">по количеству лайков (по убыванию)</option>
+                <option value="LikeAsc">по количеству лайков (возрастанию)</option>
+              </select>
             </div>
             <div class="filter-column_a">
               <label type="timeRied">Время чтения от:</label>
