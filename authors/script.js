@@ -45,6 +45,7 @@ function activate(email){
 
 window.addEventListener('load', () => {
   const authToken = localStorage.getItem('token');
+  const topAuthors = [];
   if (authToken) {
     console.log('Токен получен из localStorage:', localStorage.getItem('token'));
     email=localStorage.getItem('email')
@@ -82,14 +83,36 @@ window.addEventListener('load', () => {
           localStorage.setItem('selectedAuthor', author.fullName);
           window.location.href = 'file:///C:/lab2/post/post.html';
         });
+        topAuthors.push({
+          authorBlock: authorBlock,
+          score: author.posts * 10 + author.likes
+        });
         authorList.appendChild(authorBlock); 
       });
     }) 
     .catch(error => { 
       console.error('Ошибка получения параметров профиля:', error); 
       alert('Ошибка получения параметров профиля: ' + error.message); 
-    }); 
-  } else {
+    });
+    console.log(topAuthors);
+    topAuthors.sort((a, b) => b.score - a.score);
+    console.log(topAuthors);
+    if (topAuthors.length > 0) {
+      topAuthors[0].authorBlock.querySelector('h2').innerHTML += '<img src="https://i.imgur.com/aX7489E.png" class="crown gold">';
+      authorList.appendChild(topAuthors[0].authorBlock);
+      console.log(topAuthors[2].authorBlock);
+    }
+    if (topAuthors.length > 1) {
+      topAuthors[1].authorBlock.querySelector('h2').innerHTML += '<img src="https://i.imgur.com/D2B2W4I.png" class="crown silver">';
+      authorList.appendChild(topAuthors[1].authorBlock);
+    }
+    if (topAuthors.length > 2) {
+      topAuthors[2].authorBlock.querySelector('h2').innerHTML += '<img src="https://i.imgur.com/q8Y7dIa.png" class="crown bronze">';
+      authorList.appendChild(topAuthors[2].authorBlock);
+      console.log(topAuthors[2].authorBlock);
+    }
+  } 
+  else {
     console.log('Токен не найден в localStorage.');
     loginButton.addEventListener('click', () => {
       window.location.href = 'file:///C:/lab2/log/login.html';
