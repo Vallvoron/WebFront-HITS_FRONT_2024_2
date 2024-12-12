@@ -1,46 +1,90 @@
 const topicSelector = document.getElementById('topicSelector');
 const groupSelector = document.getElementById('group');
-const buttonsContainer = document.getElementById('buttonsContainer');
+const RegionContainer = document.getElementById('Region');
+const AreaContainer = document.getElementById('Area');
+const CityContainer = document.getElementById('City');
+const RoadContainer = document.getElementById('Road');
+const BuildingContainer = document.getElementById('Building');
+
+let curentaddress = null;
 let selected = [];
 
-function increaseSelectedTagIds(option) {
-  selected.push(option.value);
-  option.removeEventListener('click',null); 
-  option.addEventListener("click", ()=>{decreaseSelectedTagIds(option)});
-  console.log(selected);
-}
-
-function decreaseSelectedTagIds(option) {
-  selected = selected.filter(value => value !== option.value);
-  option.removeEventListener('click',null); 
-  option.addEventListener("click", ()=>{increaseSelectedTagIds(option)});
-  console.log(selected);
+function SelectedTagIds(option) {
+  if(selected.includes(option.value))
+  {
+    selected = selected.filter(value => value !== option.value);
+    console.log(selected);
+  }
+  else{
+    selected.push(option.value);
+    console.log(selected);
+  }
 }
 
 result="";
 async function fetchAndDisplayButtons(parentId,lastObjectGuid) {
   buttonsContainer.innerHTML = '';
-  const url = `https://blog.kreosoft.space/api/address/search${parentId ? '?parentObjectId=' + parentId : ''}`;
-  console.log(url);
+  let url = `https://blog.kreosoft.space/api/address/search`;
+  console.log(parentId);
+  if (parentId!= '' && parentId!= null){
+    url+= `${'?parentObjectId=' + parentId }`;
+  }
+  else{
+    deletechild(RegionContainer);
+    deletechild(AreaContainer);
+    deletechild(CityContainer);
+    deletechild(RoadContainer);
+    deletechild(BuildingContainer);
+    hideelement(0);
+  }
+  curentaddress = lastObjectGuid;
   try {
       const response = await fetch(url);
       if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
       }
+      let count = 0;
       const data = await response.json();
-
+      //console.log(data);
       if (Array.isArray(data)) {
           if (data.length > 0) {
               data.forEach(item => {
-                  const button = document.createElement('button');
-                  button.textContent = item.text;
-                  button.onclick = () => fetchAndDisplayButtons(item.objectId, item.objectGuid);
-                  buttonsContainer.appendChild(button);
+      
+                const option = document.createElement('option');
+                
+                option.dataset.objectid =item.objectId;
+                option.dataset.objectguid = item.objectGuid;
+                option.textContent = item.text;
+
+
+                if(item.objectLevel == "Region"){
+                  RegionContainer.appendChild(option);
+                  count = count || 0;
+                }
+                else if (item.objectLevel == "AdministrativeArea"){
+                  AreaContainer.appendChild(option);
+                  count = count || 1;
+                }
+                else if (item.objectLevel == "City" || item.objectLevel == "Locality" || item.objectLevel == "ElementOfPlanningStructure"){
+                  CityContainer.appendChild(option);
+                  count = count || 2;
+                }
+                else if (item.objectLevel == "ElementOfRoadNetwork"){
+                  RoadContainer.appendChild(option);
+                  count = count || 3;
+                }
+                else if (item.objectLevel == "Building"){
+                  BuildingContainer.appendChild(option);
+                  count = 4;
+                }else{
+                  console.log(item.objectLevel);
+                }
+                console.log(count);
+                hideelement(count);
               });
+
           } else {
-              // Обработка случая, когда нет дочерних элементов
-              console.log("Last objectId:", lastObjectGuid);
-              buttonsContainer.innerHTML = `<p>No more children. Last objectId: ${lastObjectGuid}</p>`;
+              //buttonsContainer.innerHTML = `<p>No more children. Last objectId: ${lastObjectGuid}</p>`;
           }
       } else {
           // Обработка случая, если ответ не является массивом
@@ -52,6 +96,80 @@ async function fetchAndDisplayButtons(parentId,lastObjectGuid) {
       buttonsContainer.innerHTML = `<p>Error: ${error.message}</p>`;
   }
 }
+
+function deletechild(selectElement){
+  while (selectElement.firstChild) {
+    selectElement.removeChild(selectElement.firstChild);
+  }
+  const option = document.createElement('option');
+  option.dataset.objectid = '';
+  option.dataset.objectguid = '';
+  option.textContent = "Не выбран";
+  selectElement.appendChild(option);
+}
+
+function hideelement(flag){
+  if(flag>0){document.getElementById('AreaAddressId').style.display = 'block';}
+  else{document.getElementById('AreaAddressId').style.display = 'none';}
+  if(flag>1){document.getElementById('CityAddressId').style.display = 'block';}
+  else{document.getElementById('CityAddressId').style.display = 'none';}
+  if(flag>2){document.getElementById('RoadAddressId').style.display = 'block';}
+  else{document.getElementById('RoadAddressId').style.display = 'none';}
+  if(flag>3){document.getElementById('BuildingAddressId').style.display = 'block';}
+  else{document.getElementById('BuildingAddressId').style.display = 'none';}
+}
+
+RegionContainer.addEventListener("change", function() { 
+  const selectedOption = this.options[this.selectedIndex]; 
+  if (selectedOption.hasAttribute("data-objectid") && selectedOption.hasAttribute("data-objectguid")) { 
+    deletechild(AreaContainer);
+    deletechild(CityContainer);
+    deletechild(RoadContainer);
+    deletechild(BuildingContainer);
+    fetchAndDisplayButtons(selectedOption.dataset.objectid, selectedOption.dataset.objectguid);
+  } else { 
+    console.error("У выбранного option отсутствуют необходимые параметры."); 
+  } 
+});
+
+AreaContainer.addEventListener("change", function() { 
+  const selectedOption = this.options[this.selectedIndex]; 
+  if (selectedOption.hasAttribute("data-objectid") && selectedOption.hasAttribute("data-objectguid")) { 
+    deletechild(CityContainer);
+    deletechild(RoadContainer);
+    deletechild(BuildingContainer);
+    fetchAndDisplayButtons(selectedOption.dataset.objectid, selectedOption.dataset.objectguid);
+  } else { 
+    console.error("У выбранного option отсутствуют необходимые параметры."); 
+  } 
+});
+CityContainer.addEventListener("change", function() { 
+  const selectedOption = this.options[this.selectedIndex]; 
+  if (selectedOption.hasAttribute("data-objectid") && selectedOption.hasAttribute("data-objectguid")) { 
+    deletechild(RoadContainer);
+    deletechild(BuildingContainer);
+    fetchAndDisplayButtons(selectedOption.dataset.objectid, selectedOption.dataset.objectguid);
+  } else { 
+    console.error("У выбранного option отсутствуют необходимые параметры."); 
+  } 
+});
+RoadContainer.addEventListener("change", function() { 
+  const selectedOption = this.options[this.selectedIndex]; 
+  if (selectedOption.hasAttribute("data-objectid") && selectedOption.hasAttribute("data-objectguid")) { 
+    deletechild(BuildingContainer);
+    fetchAndDisplayButtons(selectedOption.dataset.objectid, selectedOption.dataset.objectguid);
+  } else { 
+    console.error("У выбранного option отсутствуют необходимые параметры."); 
+  } 
+});
+BuildingContainer.addEventListener("change", function() { 
+  const selectedOption = this.options[this.selectedIndex]; 
+  if (selectedOption.hasAttribute("data-objectid") && selectedOption.hasAttribute("data-objectguid")) { 
+    fetchAndDisplayButtons(selectedOption.dataset.objectid, selectedOption.dataset.objectguid);
+  } else { 
+    console.error("У выбранного option отсутствуют необходимые параметры."); 
+  } 
+});
 
 
 function getGroups()
@@ -67,6 +185,7 @@ function getGroups()
     if (!response.ok) { 
        
       return response.text().then(text => { throw new Error(text) }); 
+      //---------------------------------------------------------------------------------------------------------------------
     } 
     return response.json();
   }) 
@@ -119,12 +238,12 @@ function getTags()
     return response.json();
   }) 
   .then(data => { 
-    topicSelector.innerHTML = ''; // Clear existing options
+    topicSelector.innerHTML = '';
     data.forEach(tag => {
       const option = document.createElement('option');
-      option.value = tag.id; // Use the ID as the value
-      option.text = tag.name; // Use the name as the displayed text
-      option.addEventListener("click", ()=>{increaseSelectedTagIds(option)});
+      option.value = tag.id;
+      option.text = tag.name;
+      option.addEventListener("click", ()=>{SelectedTagIds(option)});
       topicSelector.appendChild(option);
     });
   });
@@ -147,13 +266,11 @@ function activate(email){
 
     profileButton.addEventListener('click', () => {
       window.location.href = 'file:///C:/lab2/prof/profile.html'
-        alert("Переход на страницу профиля");
     });
 
     logoutButton.addEventListener('click', () => {
       localStorage.removeItem('token');
         window.location.reload();
-        alert("Вы вышли из аккаунта");
     });
     userMenuListenerAttached = true;
   }
@@ -173,6 +290,7 @@ window.addEventListener('load', () => {
     }
     getTags();
     getGroups();
+    deletechild(RegionContainer);
     fetchAndDisplayButtons(null);
     console.log(result);
 });
@@ -183,7 +301,7 @@ async function createPost() {
   const title = document.getElementById('title').value;
   var image = document.getElementById('image').value;
   const text = document.getElementById('text').value;
-  var addressId = document.getElementById('address').value;
+  var addressId = curentaddress;
   if(addressId.trim() == ''){
   addressId = null}
   if(image.trim() == ''){
@@ -224,7 +342,10 @@ async function createPost() {
 
     if (!response.ok) {
       const errorData = await response.json();
+      console.log(curentaddress);
+      console.log(JSON.stringify(data));
       throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message || response.statusText}`);
+
     }
 
     const responseData = await response.json();

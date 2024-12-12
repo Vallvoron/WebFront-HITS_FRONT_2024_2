@@ -11,7 +11,7 @@
     <div class="log">
         <a >Блог №415</a>
         <a href="file:///C:/lab2/post/post.html" class="return">Главная</a>
-        <a href="file:///C:/lab2/auth/authors.html" class="return">Авторы</a>
+        <a href="file:///C:/lab2/authors/authors.html" class="return">Авторы</a>
         <a href="file:///C:/lab2/groups/groups.html" class="return">Группы</a>
     </div>
     <span type="submit"  id="in">Вход</span>
@@ -55,11 +55,33 @@
         <div class="create-column" id="posttext">
           <label for="text">Текст:</label>
           <textarea id="text" name="text"></textarea>
+        </div>  
+        <div class="create-column" id="addressId">
+          <label for="address">Адрес</label>
         </div>
-        <div class="create-column" id="posttext">
-          <label for="address">Адрес:</label>
-          <select id="address" name="addressId">
-            <option value="">Не выбран</option>
+        <div class="create-column" id="RegionAddressId">
+          <label for="address">Субъект РФ:</label>
+          <select id="Region">
+          </select>
+        </div>
+        <div class="create-column" id="AreaAddressId">
+          <label for="address">Административный район:</label>
+          <select id="Area">
+          </select>
+        </div>
+        <div class="create-column" id="CityAddressId">
+          <label for="address">Город:</label>
+          <select id="City">
+          </select>
+        </div>
+        <div class="create-column" id="RoadAddressId">
+          <label for="address">Улица:</label>
+          <select id="Road">
+          </select>
+        </div>
+        <div class="create-column" id="BuildingAddressId">
+          <label for="address">Дом:</label>
+          <select id="Building">
           </select>
         </div>
       </form>
