@@ -104,6 +104,12 @@ window.addEventListener('load', () => {
         window.location.href = 'file:///C:/lab2/log/login.html';
       });
     }
+    const authorName = localStorage.getItem('selectedAuthor');
+    if (authorName) {
+      document.getElementById('author-search').value = authorName;
+      applyFilterButton.click();
+      localStorage.removeItem('selectedAuthor');
+    }
     getTags();
 });
 

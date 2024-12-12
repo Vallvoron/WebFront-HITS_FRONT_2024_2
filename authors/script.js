@@ -78,6 +78,10 @@ window.addEventListener('load', () => {
         authorBlock.querySelector('.birthdate').textContent = `Дата рождения: ${formatDate(author.birthDate)}`;
         authorBlock.querySelector('.author-stats button:first-of-type').textContent = `Постов: ${author.posts}`;
         authorBlock.querySelector('.author-stats button:last-of-type').textContent = `Лайков: ${author.likes}`;
+        authorBlock.querySelector('img').addEventListener('click', () => {
+          localStorage.setItem('selectedAuthor', author.fullName);
+          window.location.href = 'file:///C:/lab2/post/post.html';
+        });
         authorList.appendChild(authorBlock); 
       });
     }) 
