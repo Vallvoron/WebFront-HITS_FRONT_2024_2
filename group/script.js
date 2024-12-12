@@ -75,18 +75,16 @@ function getGroupInf()
         else groupType.textContent = "Тип сообщества: закрытое";
     });
 }
-function increaseSelectedTagIds(option) {
-  selected.push(option.value);
-  option.removeEventListener('click',null); 
-  option.addEventListener("click", ()=>{decreaseSelectedTagIds(option)});
-  console.log(selected);
-}
-
-function decreaseSelectedTagIds(option) {
-  selected = selected.filter(value => value !== option.value);
-  option.removeEventListener('click',null); 
-  option.addEventListener("click", ()=>{increaseSelectedTagIds(option)});
-  console.log(selected);
+function SelectedTagIds(option) {
+  if(selected.includes(option.value))
+  {
+    selected = selected.filter(value => value !== option.value);
+    console.log(selected);
+  }
+  else{
+    selected.push(option.value);
+    console.log(selected);
+  }
 }
 
 function getTags()
@@ -105,12 +103,12 @@ function getTags()
     return response.json();
   }) 
   .then(data => { 
-    topicSelector.innerHTML = '';
+    topicSelector.innerHTML = ''; // Clear existing options
     data.forEach(tag => {
       const option = document.createElement('option');
-      option.value = tag.id;
-      option.text = tag.name;
-      option.addEventListener("click", ()=>{increaseSelectedTagIds(option)});
+      option.value = tag.id; // Use the ID as the value
+      option.text = tag.name; // Use the name as the displayed text
+      option.addEventListener("click", ()=>{SelectedTagIds(option)});
       topicSelector.appendChild(option);
     });
   });

@@ -33,7 +33,21 @@ function activate(email){
   }
 }
 
+function formatDate(dateString) {
+  // Convert the date string to a Date object
+  const date = new Date(dateString);
+
+  // Extract year, month, and day
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+  const day = String(date.getDate()).padStart(2, '0');
+
+  // Format the date as DD.MM.YYYY
+  return `${day}.${month}.${year}`;
+}
+
 window.addEventListener('load', () => {
+  console.log(savebutton);
   const authToken = localStorage.getItem('token');
   if (authToken) {
     console.log('Токен получен из localStorage:', localStorage.getItem('token'));
@@ -58,16 +72,30 @@ window.addEventListener('load', () => {
       useremail.value=data.email;
       fio.value=data.fullName;
       phone.value=data.phoneNumber;
-      gender.value=data.gender;
-      birthdate.value=data.birthDate;
+      console.log(data.gender)
+      if(data.gender=="Male"){
+        const matchingOption = Array.from(gender.options).find(option => option.textContent === "Мужчина");
+        matchingOption.selected = true;
+        console.log();
+      }
+      else {
+        const matchingOption2 = Array.from(gender.options).find(option => option.textContent === "Женщина");
+        matchingOption2.selected = true;}
+      //gender.value=data.gender;
+      birthdate.value=formatDate(data.birthDate);
       savebutton.addEventListener('click',()=>{
+        let resGen="";
+        if(gender.selectedOptions[0].textContent=="Мужчина"){
+          resGen="Male";
+        }
+        else{resGen="Female"}
         fetch('https://blog.kreosoft.space/api/account/profile', { 
           method: 'PUT', 
           headers: { 
             Authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'
           }, 
-          body: JSON.stringify({ email: useremail.value, fullName: fio.value, gender: gender.value, phoneNumber: phone.value}) 
+          body: JSON.stringify({ email: useremail.value, fullName: fio.value, gender: resGen, phoneNumber: phone.value}) 
         }) 
         .then(response => { 
           if (!response.ok) { 
