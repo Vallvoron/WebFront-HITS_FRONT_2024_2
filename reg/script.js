@@ -14,7 +14,7 @@ function activate(email){
 
     // Обработчики для кнопок "Профиль" и "Выход"
     profileButton.addEventListener('click', () => {
-      window.location.href = 'file:///C:/Users/admin/OneDrive/Рабочий%20стол/lab2/prof/profile.html'
+      window.location.href = 'file:///C:/lab2/prof/profile.html'
         alert("Переход на страницу профиля");
     });
 
@@ -38,7 +38,7 @@ window.addEventListener('load', () => {
   } else {
     console.log('Токен не найден в localStorage.');
     loginButton.addEventListener('click', () => {
-      window.location.href = 'file:///C:/Users/admin/OneDrive/Рабочий%20стол/lab2/log/login.html';
+      window.location.href = 'file:///C:/lab2/log/login.html';
     });
   }
 });

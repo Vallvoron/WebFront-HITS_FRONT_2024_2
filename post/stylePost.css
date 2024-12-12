@@ -199,6 +199,7 @@ main {
 
 #post-container {
   margin: 0 auto;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -308,7 +309,40 @@ margin-left: 10px;
 color: red;
 }
 
-
+.PaginachionContainer{  
+  margin: 0 auto;
+  margin-bottom: 30px;
+  margin-top: auto;
+  border: none;
+  background-color: white; 
+  width:75%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  
+}
+#Paginachion{
+  margin-bottom: 0;
+  margin-left: 10px;
+}
+.PaginachionContainer button{
+  background-color: #fff;
+  color: #106ef5;
+  border: 1px solid #106ef5;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}  
+#button4{
+  background-color: #106ef5;
+  color: #fff;
+  
+}
+#postcount{
+  margin-left: auto;
+  margin-right: 10px;
+  width: 50px;
+}
 
 
 footer { 

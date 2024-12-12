@@ -47,7 +47,6 @@ function formatDate(dateString) {
 }
 
 window.addEventListener('load', () => {
-  console.log(savebutton);
   const authToken = localStorage.getItem('token');
   if (authToken) {
     console.log('Токен получен из localStorage:', localStorage.getItem('token'));
@@ -76,7 +75,6 @@ window.addEventListener('load', () => {
       if(data.gender=="Male"){
         const matchingOption = Array.from(gender.options).find(option => option.textContent === "Мужчина");
         matchingOption.selected = true;
-        console.log();
       }
       else {
         const matchingOption2 = Array.from(gender.options).find(option => option.textContent === "Женщина");

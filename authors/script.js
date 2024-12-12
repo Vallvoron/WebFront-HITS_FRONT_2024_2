@@ -51,71 +51,71 @@ window.addEventListener('load', () => {
     email=localStorage.getItem('email')
     document.getElementById('in').textContent=email;
     activate(email);
-    fetch('https://blog.kreosoft.space/api/author/list', { 
-      method: 'GET', 
-      headers: { 
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json' 
-      }, 
-    }) 
-    .then(response => { 
-      if (!response.ok) { 
-          
-        return response.text().then(text => { throw new Error(text) }); 
-      } 
-      return response.json();
-    })
-    .then(data => { 
-      data.forEach(author => {
-        const authorBlock = authorTemplate.content.cloneNode(true);
-        
-        if(author.gender=="Male")        {
-          authorBlock.querySelector('img').src = 'https://sun9-16.userapi.com/impg/Bto5XYXGIRXQmSbE8EeTg-hflUVWCs8JISFsAQ/wV6uTSmo2bQ.jpg?size=373x374&quality=95&sign=997a3ac7da07676d3e65910d7102a5e5&type=album';
-        }
-        else {authorBlock.querySelector('img').src = 'https://sun9-76.userapi.com/impg/MCEJgo4lJPINMM9pRw3P2zm4VSz9kJO4D5irgQ/zIQ28KZhNKw.jpg?size=375x374&quality=95&sign=cd0248fc28ee2a608c61b5b202ea924d&type=album';}
-        
-        authorBlock.querySelector('h2').textContent = author.fullName;
-        authorBlock.querySelector('p:first-of-type').textContent = `Создан: ${formatDate(author.created)}`;
-        authorBlock.querySelector('.birthdate').textContent = `Дата рождения: ${formatDate(author.birthDate)}`;
-        authorBlock.querySelector('.author-stats button:first-of-type').textContent = `Постов: ${author.posts}`;
-        authorBlock.querySelector('.author-stats button:last-of-type').textContent = `Лайков: ${author.likes}`;
-        authorBlock.querySelector('img').addEventListener('click', () => {
-          localStorage.setItem('selectedAuthor', author.fullName);
-          window.location.href = 'file:///C:/lab2/post/post.html';
-        });
-        topAuthors.push({
-          authorBlock: authorBlock,
-          score: author.posts * 10 + author.likes
-        });
-        authorList.appendChild(authorBlock); 
-      });
-    }) 
-    .catch(error => { 
-      console.error('Ошибка получения параметров профиля:', error); 
-      alert('Ошибка получения параметров профиля: ' + error.message); 
-    });
-    console.log(topAuthors);
-    topAuthors.sort((a, b) => b.score - a.score);
-    console.log(topAuthors);
-    if (topAuthors.length > 0) {
-      topAuthors[0].authorBlock.querySelector('h2').innerHTML += '<img src="https://i.imgur.com/aX7489E.png" class="crown gold">';
-      authorList.appendChild(topAuthors[0].authorBlock);
-      console.log(topAuthors[2].authorBlock);
-    }
-    if (topAuthors.length > 1) {
-      topAuthors[1].authorBlock.querySelector('h2').innerHTML += '<img src="https://i.imgur.com/D2B2W4I.png" class="crown silver">';
-      authorList.appendChild(topAuthors[1].authorBlock);
-    }
-    if (topAuthors.length > 2) {
-      topAuthors[2].authorBlock.querySelector('h2').innerHTML += '<img src="https://i.imgur.com/q8Y7dIa.png" class="crown bronze">';
-      authorList.appendChild(topAuthors[2].authorBlock);
-      console.log(topAuthors[2].authorBlock);
-    }
   } 
   else {
     console.log('Токен не найден в localStorage.');
     loginButton.addEventListener('click', () => {
       window.location.href = 'file:///C:/lab2/log/login.html';
     });
+  }
+  fetch('https://blog.kreosoft.space/api/author/list', { 
+    method: 'GET', 
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json' 
+    }, 
+  }) 
+  .then(response => { 
+    if (!response.ok) { 
+        
+      return response.text().then(text => { throw new Error(text) }); 
+    } 
+    return response.json();
+  })
+  .then(data => { 
+    data.forEach(author => {
+      const authorBlock = authorTemplate.content.cloneNode(true);
+      
+      if(author.gender=="Male")        {
+        authorBlock.querySelector('img').src = 'https://sun9-16.userapi.com/impg/Bto5XYXGIRXQmSbE8EeTg-hflUVWCs8JISFsAQ/wV6uTSmo2bQ.jpg?size=373x374&quality=95&sign=997a3ac7da07676d3e65910d7102a5e5&type=album';
+      }
+      else {authorBlock.querySelector('img').src = 'https://sun9-76.userapi.com/impg/MCEJgo4lJPINMM9pRw3P2zm4VSz9kJO4D5irgQ/zIQ28KZhNKw.jpg?size=375x374&quality=95&sign=cd0248fc28ee2a608c61b5b202ea924d&type=album';}
+      
+      authorBlock.querySelector('h2').textContent = author.fullName;
+      authorBlock.querySelector('p:first-of-type').textContent = `Создан: ${formatDate(author.created)}`;
+      authorBlock.querySelector('.birthdate').textContent = `Дата рождения: ${formatDate(author.birthDate)}`;
+      authorBlock.querySelector('.author-stats button:first-of-type').textContent = `Постов: ${author.posts}`;
+      authorBlock.querySelector('.author-stats button:last-of-type').textContent = `Лайков: ${author.likes}`;
+      authorBlock.querySelector('img').addEventListener('click', () => {
+        localStorage.setItem('selectedAuthor', author.fullName);
+        window.location.href = 'file:///C:/lab2/post/post.html';
+      });
+      topAuthors.push({
+        authorBlock: authorBlock,
+        score: author.posts * 10 + author.likes
+      });
+      authorList.appendChild(authorBlock); 
+    });
+  }) 
+  .catch(error => { 
+    console.error('Ошибка получения параметров профиля:', error); 
+    alert('Ошибка получения параметров профиля: ' + error.message); 
+  });
+  console.log(topAuthors);
+  topAuthors.sort((a, b) => b.score - a.score);
+  console.log(topAuthors);
+  if (topAuthors.length > 0) {
+    topAuthors[0].authorBlock.querySelector('h2').innerHTML += '<img src="https://i.imgur.com/aX7489E.png" class="crown gold">';
+    authorList.appendChild(topAuthors[0].authorBlock);
+    console.log(topAuthors[2].authorBlock);
+  }
+  if (topAuthors.length > 1) {
+    topAuthors[1].authorBlock.querySelector('h2').innerHTML += '<img src="https://i.imgur.com/D2B2W4I.png" class="crown silver">';
+    authorList.appendChild(topAuthors[1].authorBlock);
+  }
+  if (topAuthors.length > 2) {
+    topAuthors[2].authorBlock.querySelector('h2').innerHTML += '<img src="https://i.imgur.com/q8Y7dIa.png" class="crown bronze">';
+    authorList.appendChild(topAuthors[2].authorBlock);
+    console.log(topAuthors[2].authorBlock);
   }
 });

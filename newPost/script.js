@@ -222,31 +222,39 @@ function getGroups()
   });
 }
 
-function getTags()
-{
-  fetch('https://blog.kreosoft.space/api/tag', { 
-    method: 'GET', 
-    headers: { 
-      'Content-Type': 'application/json' 
-    }, 
-  }) 
-  .then(response => { 
-    if (!response.ok) { 
-       
-      return response.text().then(text => { throw new Error(text) }); 
-    } 
-    return response.json();
-  }) 
-  .then(data => { 
-    topicSelector.innerHTML = '';
-    data.forEach(tag => {
-      const option = document.createElement('option');
-      option.value = tag.id;
+function handleSelectChange(option) {
+  if(selected.includes(option.value)){
+    option.style.backgroundColor = 'gray'; 
+  } else {
+    option.style.backgroundColor = '';
+  }
+}
+
+function getTags() 
+{ 
+  fetch('https://blog.kreosoft.space/api/tag', {  
+    method: 'GET',  
+    headers: {  
+      'Content-Type': 'application/json'  
+    },  
+  })  
+  .then(response => {  
+    if (!response.ok) {  
+        
+      return response.text().then(text => { throw new Error(text) });  
+    }  
+    return response.json(); 
+  })  
+  .then(data => {  
+    topicSelector.innerHTML = ''; 
+    data.forEach(tag => { 
+      const option = document.createElement('option'); 
+      option.value = tag.id; 
       option.text = tag.name;
-      option.addEventListener("click", ()=>{SelectedTagIds(option)});
-      topicSelector.appendChild(option);
-    });
-  });
+      option.addEventListener("click", ()=>{SelectedTagIds(option); handleSelectChange(option)}); 
+      topicSelector.appendChild(option); 
+    }); 
+  }); 
 }
 
 const loginButton = document.getElementById('in');

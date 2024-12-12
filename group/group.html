@@ -25,7 +25,7 @@
         <div class="info-row">
             <div class="group-name" id="group-name"></div>            
             <div class="btn">
-                <button id="makePost">Написать пост</button>
+                <button id="makePost" onclick=newPost()>Написать пост</button>
                 <button id="subscribe">Подписаться</button>            
             </div>
         </div>
@@ -39,16 +39,16 @@
         <div class="info-row">
           <div class="group-admin">Администраторы</div>    
         </div>
-        <template id="admin-template">
-          <div class="admin-block">
-            <img src="" alt="">
-                <div class="admin-info">
-                    <div class="name-created"> 
-                        <h2></h2>
-                    </div>
-                </div>
-          </div>
-        </template>
+        <div id="admin-container">
+          <template id="admin-template">
+            <div class="admin-block">
+              <img src="" alt="">
+              <div class="admin-info">
+                  <div class="name-created"></div>
+              </div>
+            </div>
+          </template>
+        </div>
       </div>
       
 
@@ -101,6 +101,13 @@
             </div>
           </div>
         </template>
+      </div>
+      <div class="PaginachionContainer" >
+        
+        <div class="filter-row" id="Paginachion">
+          <div id="PaginachionContainer"></div>
+          <input type="number" id="postcount" value="5">
+        </div>
       </div>
     </main>
     <footer>
