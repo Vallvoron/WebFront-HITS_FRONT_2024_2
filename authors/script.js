@@ -69,9 +69,9 @@ window.addEventListener('load', () => {
         const authorBlock = authorTemplate.content.cloneNode(true);
         
         if(author.gender=="Male")        {
-          authorBlock.querySelector('img').src = '';
+          authorBlock.querySelector('img').src = 'https://sun9-16.userapi.com/impg/Bto5XYXGIRXQmSbE8EeTg-hflUVWCs8JISFsAQ/wV6uTSmo2bQ.jpg?size=373x374&quality=95&sign=997a3ac7da07676d3e65910d7102a5e5&type=album';
         }
-        else {authorBlock.querySelector('img').src = '';}
+        else {authorBlock.querySelector('img').src = 'https://sun9-76.userapi.com/impg/MCEJgo4lJPINMM9pRw3P2zm4VSz9kJO4D5irgQ/zIQ28KZhNKw.jpg?size=375x374&quality=95&sign=cd0248fc28ee2a608c61b5b202ea924d&type=album';}
         
         authorBlock.querySelector('h2').textContent = author.fullName;
         authorBlock.querySelector('p:first-of-type').textContent = `Создан: ${formatDate(author.created)}`;
