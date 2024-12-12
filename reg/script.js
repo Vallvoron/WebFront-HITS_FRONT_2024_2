@@ -12,7 +12,6 @@ function activate(email){
     profileButton.style.display = 'inline-block';
     logoutButton.style.display = 'inline-block';
 
-    // Обработчики для кнопок "Профиль" и "Выход"
     profileButton.addEventListener('click', () => {
       window.location.href = 'file:///C:/lab2/prof/profile.html'
         alert("Переход на страницу профиля");
@@ -33,8 +32,7 @@ window.addEventListener('load', () => {
     email=localStorage.getItem('email')
     document.getElementById('in').textContent=email;
     activate(email);
-    // Используйте токен для авторизации
-    // ... ваш код ...
+    
   } else {
     console.log('Токен не найден в localStorage.');
     loginButton.addEventListener('click', () => {
@@ -138,6 +136,7 @@ function register(){
       console.log('Токен получен из заголовка:', token);
       console.log(localStorage.getItem('email'));
       activate(email);
+      window.location.href = 'file:///C:/lab2/post/post.html';
     } else {  
       console.error('Токен не найден в заголовке ответа.');  
     }  

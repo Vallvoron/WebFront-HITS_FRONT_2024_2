@@ -75,6 +75,7 @@ function a(){
       console.log('Токен получен из заголовка:', token);
       console.log(localStorage.getItem('email'));
       activate(email);
+      window.location.href = 'file:///C:/lab2/post/post.html';
     } else {  
       console.error('Токен не найден в заголовке ответа.');  
     }  

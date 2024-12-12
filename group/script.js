@@ -8,6 +8,7 @@ const applyFilterButton = document.getElementById('filter-button');
 
 const topicSelector = document.getElementById('topicSelector');
 const sortingInput = document.getElementById('sort-by');
+const PaginachionContainer = document.getElementById('PaginachionContainer');
 const pageInput = document.getElementById('page');
 const sizeInput = document.getElementById('size');
 
@@ -15,19 +16,19 @@ const loginButton = document.getElementById('in');
 const profileButton = document.getElementById('profileButton');
 const logoutButton = document.getElementById('logoutButton');
 const userMenu = document.getElementById('userMenu');
+const subscribeBTN = document.getElementById('subscribe');
 
 let groupName = document.getElementById('group-name');
-const makePost = document.getElementById('makePost');
-let subscribe = document.getElementById('subscribe');
 let groupMemberCount = document.getElementById('group-member-count');
 let groupType = document.getElementById('group-type');
 
-const PaginachionContainer = document.getElementById('PaginachionContainer');
+
 let currentPage = 1; 
 let pageSize = 5; 
 let pagecount;
 let currentFilters = {}; 
 let currentSorting = ''; 
+let groupid;
 
 let selected = [];
 let userMenuListenerAttached=false;
@@ -43,11 +44,13 @@ function activate(email){
   
       profileButton.addEventListener('click', () => {
         window.location.href = 'file:///C:/lab2/prof/profile.html'
+        alert("Переход на страницу профиля");
       });
   
       logoutButton.addEventListener('click', () => {
         localStorage.removeItem('token');
           window.location.reload();
+          alert("Вы вышли из аккаунта");
       });
       userMenuListenerAttached = true;
     }
@@ -57,22 +60,22 @@ function getGroupInf()
 {
   const group=localStorage.getItem("GroupId");
   fetch(`https://blog.kreosoft.space/api/community/${group}`, { 
-      method: 'GET', 
-      headers: { 
-        'Content-Type': 'application/json' 
-      }, 
+    method: 'GET', 
+    headers: { 
+      'Content-Type': 'application/json' 
+    }, 
   })
   .then(response => { 
-      if (!response.ok) { 
-          return response.text().then(text => { throw new Error(text) }); 
-      } 
-      return response.json();
+    if (!response.ok) { 
+      return response.text().then(text => { throw new Error(text) }); 
+    } 
+    return response.json();
   }) 
   .then(data => {
     groupName.textContent = `Группа "`+data.name+`"`;
     groupMemberCount.textContent = data.subscribersCount+" подписчиков";
     if(data.isClosed=true){
-        groupType.textContent = "Тип сообщества: открытое";
+      groupType.textContent = "Тип сообщества: открытое";
     }
     else groupType.textContent = "Тип сообщества: закрытое";
     const admins = data.administrators;
@@ -88,6 +91,33 @@ function getGroupInf()
       adminContainer.appendChild(adminblock); 
     })
   });
+  fetch(`https://blog.kreosoft.space/api/community/my`, { 
+    method: 'GET', 
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json' 
+    }, 
+  })
+  .then(response => { 
+    if (!response.ok) { 
+      return response.text().then(text => { throw new Error(text) }); 
+    } 
+    return response.json();
+  }) 
+  .then(data => {
+    data.forEach(gp => {
+      if(gp.communityId == group){
+        if(gp.role == "Subscriber"){
+          subscribeBTN.textContent="Отписаться";
+          subscribeBTN.style.backgroundColor = 'red';
+        }
+        else{
+          subscribeBTN.style.display = 'none';
+        }
+      }
+    })
+  })
+  groupid = group;
 }
 
 
@@ -156,40 +186,41 @@ function SelectedTagIds(option) {
   } 
 } 
 
-
-function handleSelectChange(option) {
-  if(selected.includes(option.value)){
-    option.style.backgroundColor = 'gray'; 
-  } else {
-    option.style.backgroundColor = '';
-  }
-}
-
-function getTags() 
-{ 
-  fetch('https://blog.kreosoft.space/api/tag', {  
-    method: 'GET',  
-    headers: {  
-      'Content-Type': 'application/json'  
-    },  
-  })  
-  .then(response => {  
-    if (!response.ok) {  
-        
-      return response.text().then(text => { throw new Error(text) });  
-    }  
-    return response.json(); 
-  })  
-  .then(data => {  
-    topicSelector.innerHTML = ''; 
-    data.forEach(tag => { 
-      const option = document.createElement('option'); 
-      option.value = tag.id; 
-      option.text = tag.name;
-      option.addEventListener("click", ()=>{SelectedTagIds(option); handleSelectChange(option)}); 
-      topicSelector.appendChild(option); 
-    }); 
-  }); 
+function handleSelectChange(option) { 
+  console.log(option.value) 
+  if(selected.includes(option.value)){ 
+    option.style.backgroundColor = 'gray';  
+    console.log(option.style.backgroundColor) 
+  } else { 
+    option.style.backgroundColor = ''; 
+  } 
+} 
+ 
+function getTags()  
+{  
+  fetch('https://blog.kreosoft.space/api/tag', {   
+    method: 'GET',   
+    headers: {   
+      'Content-Type': 'application/json'   
+    },   
+  })   
+  .then(response => {   
+    if (!response.ok) {   
+         
+      return response.text().then(text => { throw new Error(text) });   
+    }   
+    return response.json();  
+  })   
+  .then(data => {   
+    topicSelector.innerHTML = '';  
+    data.forEach(tag => {  
+      const option = document.createElement('option');  
+      option.value = tag.id;  
+      option.text = tag.name; 
+      option.addEventListener("click", ()=>{SelectedTagIds(option); handleSelectChange(option)});  
+      topicSelector.appendChild(option);  
+    });  
+  });  
 }
 
 function goLeft(flag){
@@ -279,22 +310,22 @@ function editPaginationBTN(){
 
 
 window.addEventListener('load', () => {
-    const authToken = localStorage.getItem('token');
-    if (authToken) {
-      console.log('Токен получен из localStorage:', localStorage.getItem('token'));
-      email=localStorage.getItem('email')
-      document.getElementById('in').textContent=email;
-      activate(email);
-    } else {
-      console.log('Токен не найден в localStorage.');
-      loginButton.addEventListener('click', () => {
-        window.location.href = 'file:///C:/lab2/log/login.html';
-      });
-    }
-    getTags();
-    getGroupInf();
-    paginationBTN();
-    editPaginationBTN();
+  const authToken = localStorage.getItem('token');
+  if (authToken) {
+    console.log('Токен получен из localStorage:', localStorage.getItem('token'));
+    email=localStorage.getItem('email')
+    document.getElementById('in').textContent=email;
+    activate(email);
+  } else {
+    console.log('Токен не найден в localStorage.');
+    loginButton.addEventListener('click', () => {
+      window.location.href = 'file:///C:/lab2/log/login.html';
+    });
+  }
+  getTags();
+  getGroupInf();
+  paginationBTN();
+  editPaginationBTN();
 });
 
 function formatDate(dateString) {
@@ -313,7 +344,7 @@ applyFilterButton.addEventListener('click', () => {
   postContainer.innerHTML = '';
   const params = {};
   if (sortingInput.value.trim() !== '') {
-      params.sorting = sortingInput.value;
+    params.sorting = sortingInput.value;
   }
   if (currentPage != 1){
     params.page =currentPage;
@@ -405,7 +436,26 @@ applyFilterButton.addEventListener('click', () => {
   });
 })
 
-function newPost()
-{
-  window.location.href = "file:///C:/lab2/newPost/creater.html"
+
+function makePost(){
+  window.location.href = 'file:///C:/lab2/newPost/creater.html';
+}
+
+function subscribe(){
+  if(subscribeBTN.textContent == 'Подписаться'){
+    fetch(`https://blog.kreosoft.space/api/community/${groupid}/subscribe`, { 
+      method: "POST", 
+      headers: { 
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      } 
+  });
+  }else{
+    fetch(`https://blog.kreosoft.space/api/community/${groupid}/unsubscribe`, { 
+      method: "DELETE", 
+      headers: { 
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      } 
+  });
+  }
+  location.reload();
 }
